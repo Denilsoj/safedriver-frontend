@@ -21,3 +21,13 @@ export const applyZipMask = (value: string): string => {
 	}
 	return `${numericValue.slice(0, 5)}-${numericValue.slice(5, 8)}`;
 };
+
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const debounce = (func: (...args: any) => void, delay: number) => {
+	let timer: NodeJS.Timeout;
+	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+	return (...args: any[]) => {
+		clearTimeout(timer);
+		timer = setTimeout(() => func(...args), delay);
+	};
+};
