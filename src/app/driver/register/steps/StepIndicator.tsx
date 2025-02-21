@@ -12,7 +12,7 @@ export function StepIndicator({
 	steps = ["Dados Pessoais", "Endereço", "Documentos"],
 }: StepIndicatorProps) {
 	return (
-		<div className="py-4">
+		<div className="py-4 max-sm:hidden">
 			<div className="flex justify-between">
 				{steps.map((step, index) => (
 					<div key={step} className="flex flex-col items-center">
