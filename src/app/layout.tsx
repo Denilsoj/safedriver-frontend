@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { Sidebar } from "./driver/Sidebar";
+
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -27,10 +30,14 @@ export default function RootLayout({
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
-				<main className="h-full w-full">
-					{children}
-					<Toaster />
-				</main>
+				<div className="flex">
+					<Sidebar />
+					<main className="min-h-screen w-full bg-slate-100">
+						<ReactQueryProvider>{children}</ReactQueryProvider>
+
+						<Toaster />
+					</main>
+				</div>
 			</body>
 		</html>
 	);
