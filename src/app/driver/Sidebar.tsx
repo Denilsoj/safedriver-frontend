@@ -9,7 +9,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const sidebarItems = [
-	{ name: "Dashboard", href: "/", icon: Home },
+	{ name: "Home", href: "/", icon: Home },
 	{ name: "Motoristas", href: "/driver", icon: Truck },
 	{ name: "Cadastre-se", href: "/driver/register", icon: Users },
 ];
