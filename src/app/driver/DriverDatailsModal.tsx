@@ -55,12 +55,13 @@ export default function DriverDetailsModal({
 	const [isEditing, setIsEditing] = useState(false);
 	const [isOpen, setIsOpen] = useState(false);
 	const [activeTab, setActiveTab] = useState("personal");
+
 	const formatedDate = new Date(driver.date_birth);
 	const form = useForm<DriverFormValues>({
 		resolver: zodResolver(driverFormSchemaUpdated),
 		defaultValues: {
 			...driver,
-			date_birth: formatedDate.toISOString().split("T")[0],
+			date_birth: new Date(driver.date_birth),
 			status: driver.status as "Ativo" | "Inativo",
 		},
 	});
@@ -126,15 +127,16 @@ export default function DriverDetailsModal({
 		}
 		updateDriverMutation.mutate(formData);
 	};
-	const MAX_FILE_SIZE = 5 * 1024 * 1024;
+	const MAX_FILE_SIZE = 10 * 1024 * 1024;
 	const ACCEPTED_FILE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
 	const handleCnhUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files?.[0]) {
 			const file = e.target.files[0];
+
 			if (file.size > MAX_FILE_SIZE) {
 				toast({
 					title: "Arquivo muito grande",
-					description: "O arquivo deve ter no máximo 5MB.",
+					description: "O arquivo deve ter no máximo 10MB.",
 					variant: "destructive",
 				});
 				return;
@@ -603,7 +605,7 @@ export default function DriverDetailsModal({
 																	ref={cnhInputRef}
 																	id="cnh_upload"
 																	type="file"
-																	accept="image/*,.pdf"
+																	accept="image/*"
 																	className="hidden"
 																	onChange={(e) => {
 																		handleCnhUpload(e);
@@ -650,7 +652,6 @@ export default function DriverDetailsModal({
 									)}
 								/>
 
-								{/* CRLV Document */}
 								<FormField
 									control={form.control}
 									name="src_crlv"
@@ -666,7 +667,7 @@ export default function DriverDetailsModal({
 																	ref={crlvInputRef}
 																	id="crlv_upload"
 																	type="file"
-																	accept="image/*,.pdf"
+																	accept="image/*"
 																	className="hidden"
 																	onChange={(e) => {
 																		handleCrlvUpload(e);
