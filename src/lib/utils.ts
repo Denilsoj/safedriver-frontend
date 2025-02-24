@@ -5,8 +5,8 @@ export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
 
-export const isAdult = (date: string) => {
-	const birth_date = new Date(date);
+export const isAdult = (date: Date | string) => {
+	const birth_date = typeof date === "string" ? new Date(date) : date;
 	const today = new Date();
 
 	const age = today.getFullYear() - birth_date.getFullYear();
