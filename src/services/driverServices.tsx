@@ -12,7 +12,7 @@ export const updateDriverData = async (data: FormData) => {
 		throw new Error("Erro ao atualizar motorista");
 	}
 
-	return response.json();
+	return response.status;
 };
 
 export const getDriver = async (): Promise<Driver[]> => {
@@ -43,5 +43,5 @@ export const storeDriver = async (completeFormData: FormData) => {
 		throw new Error(errorData.message || "Erro ao cadastrar motorista");
 	}
 
-	return await response.json();
+	return await response.status;
 };
