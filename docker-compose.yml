@@ -1,0 +1,19 @@
+services:
+  safedriver-front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: safedriver-front
+    ports:
+      - "3000:3000"
+    networks:
+      - safedriver_network
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    env_file:
+      - .env
+
+networks:
+  safedriver_network:
+    driver: bridge
