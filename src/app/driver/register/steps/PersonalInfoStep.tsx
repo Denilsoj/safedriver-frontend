@@ -36,7 +36,7 @@ export function PersonalInfoStep() {
 			name: "",
 			email: "",
 			cpf: "",
-			phone: "",
+			telephone: "",
 			date_birth: undefined,
 		},
 	});
@@ -162,14 +162,14 @@ export function PersonalInfoStep() {
 
 					<FormField
 						control={form.control}
-						name="phone"
+						name="telephone"
 						render={({ field }) => (
 							<FormItem>
 								<FormLabel>Telefone</FormLabel>
 								<FormControl>
 									<Input
 										placeholder="(00) 00000-0000"
-										value={maskPhone(field.value)}
+										value={maskPhone(field.value || "")}
 										onChange={(e) => {
 											const rawValue = e.target.value.replace(/\D/g, "");
 											if (rawValue.length <= 11) field.onChange(rawValue);
