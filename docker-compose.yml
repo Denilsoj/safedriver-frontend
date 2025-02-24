@@ -10,9 +10,8 @@ services:
       - safedriver_network
     volumes:
       - ./app:/app
-    working_dir: /app
     env_file:
-      - .env
+      - ./app/.env
 
 networks:
   safedriver_network:
