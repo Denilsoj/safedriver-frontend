@@ -1,9 +1,9 @@
 "use client";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDriverForm } from "@/context/DriverFormContex";
 import { enhancedDocumentSchema } from "@/lib/validation/driver";
-import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import type { DocumentsFormData } from "@/types/form";
 import {
@@ -29,8 +29,8 @@ export function DocumentsStep() {
 	const form = useForm<DocumentsFormData>({
 		resolver: zodResolver(enhancedDocumentSchema),
 		defaultValues: {
-			src_cnh: formData.documents?.src_cnh || undefined,
-			src_crlv: formData.documents?.src_crlv || undefined,
+			src_cnh: undefined,
+			src_crlv: undefined,
 		},
 		mode: "onChange",
 	});
@@ -41,7 +41,6 @@ export function DocumentsStep() {
 		mutationFn: (data: FormData) => storeDriver(data),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: ["drivers"] });
-
 			toast({
 				title: "Sucesso!",
 				description: "Cadastro realizado com sucesso.",
@@ -84,12 +83,12 @@ export function DocumentsStep() {
 				);
 			}
 
-			if (data.src_cnh?.[0]) {
-				formDataToSubmit.append("src_cnh", data.src_cnh[0]);
+			if (data.src_cnh) {
+				formDataToSubmit.append("src_cnh", data.src_cnh);
 			}
 
-			if (data.src_crlv?.[0]) {
-				formDataToSubmit.append("src_crlv", data.src_crlv[0]);
+			if (data.src_crlv) {
+				formDataToSubmit.append("src_crlv", data.src_crlv);
 			}
 
 			mutation.mutate(formDataToSubmit);
@@ -110,7 +109,7 @@ export function DocumentsStep() {
 					<FormField
 						control={form.control}
 						name="src_cnh"
-						render={({ field }) => (
+						render={({ field: { onChange, ...field } }) => (
 							<FormItem>
 								<FormLabel className="text-base font-semibold">
 									CNH do Motorista <span className="text-red-500">*</span>
@@ -121,16 +120,20 @@ export function DocumentsStep() {
 											type="file"
 											accept=".jpg,.jpeg,.png,.pdf"
 											onChange={(e) => {
-												field.onChange(e.target.files);
-												form.trigger("src_cnh");
+												const file = e.target.files?.[0];
+												if (file) {
+													onChange(file);
+													form.trigger("src_cnh");
+												}
 											}}
 											className="mt-1 block w-full cursor-pointer"
 										/>
-										{field.value?.[0] && (
+										{field.value && (
 											<p className="text-sm text-gray-500">
-												Arquivo selecionado: {field.value[0].name}
+												Arquivo selecionado: {(field.value as File).name}
 												{" ("}
-												{(field.value[0].size / 1024 / 1024).toFixed(2)}MB{")"}
+												{((field.value as File).size / 1024 / 1024).toFixed(2)}
+												MB{")"}
 											</p>
 										)}
 									</div>
@@ -143,7 +146,7 @@ export function DocumentsStep() {
 					<FormField
 						control={form.control}
 						name="src_crlv"
-						render={({ field }) => (
+						render={({ field: { onChange, ...field } }) => (
 							<FormItem>
 								<FormLabel className="text-base font-semibold">
 									CRLV do Veículo <span className="text-red-500">*</span>
@@ -154,16 +157,20 @@ export function DocumentsStep() {
 											type="file"
 											accept=".jpg,.jpeg,.png,.pdf"
 											onChange={(e) => {
-												field.onChange(e.target.files);
-												form.trigger("src_crlv");
+												const file = e.target.files?.[0];
+												if (file) {
+													onChange(file);
+													form.trigger("src_crlv");
+												}
 											}}
 											className="mt-1 block w-full cursor-pointer"
 										/>
-										{field.value?.[0] && (
+										{field.value && (
 											<p className="text-sm text-gray-500">
-												Arquivo selecionado: {field.value[0].name}
+												Arquivo selecionado: {(field.value as File).name}
 												{" ("}
-												{(field.value[0].size / 1024 / 1024).toFixed(2)}MB{")"}
+												{((field.value as File).size / 1024 / 1024).toFixed(2)}
+												MB{")"}
 											</p>
 										)}
 									</div>
