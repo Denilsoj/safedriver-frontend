@@ -3,10 +3,13 @@ import type { Driver } from "@/lib/validation/driver";
 export const updateDriverData = async (data: FormData) => {
 	const cpf = data.get("cpf");
 
-	const response = await fetch(`http://localhost:8080/driver/${cpf}`, {
-		method: "PATCH",
-		body: data,
-	});
+	const response = await fetch(
+		`${process.env.NEXT_PUBLIC_URL_API}/driver/${cpf}`,
+		{
+			method: "PATCH",
+			body: data,
+		},
+	);
 
 	if (!response.ok) {
 		throw new Error("Erro ao atualizar motorista");
@@ -16,7 +19,7 @@ export const updateDriverData = async (data: FormData) => {
 };
 
 export const getDriver = async (): Promise<Driver[]> => {
-	const response = await fetch("http://localhost:8080/driver", {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/driver`, {
 		method: "GET",
 	});
 
@@ -29,7 +32,7 @@ export const getDriver = async (): Promise<Driver[]> => {
 };
 
 export const storeDriver = async (completeFormData: FormData) => {
-	const response = await fetch("http://localhost:8080/driver", {
+	const response = await fetch(`${process.env.NEXT_PUBLIC_URL_API}/driver`, {
 		method: "POST",
 		body: completeFormData,
 	});
