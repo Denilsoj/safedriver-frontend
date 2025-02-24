@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function Home() {
 	return (
-		<div className="min-h-screen overflow-y-">
+		<div className="min-h-screen overflow-y">
 			<div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 py-8 lg:py-16 px-4 lg:px-8">
 				<div className="flex-1 space-y-4 lg:space-y-6 text-center lg:text-left">
 					<h1 className="text-3xl md:text-2xl lg:text-5xl font-bold text-[#4A148C] leading-tight">
@@ -19,7 +19,7 @@ export default function Home() {
 					</p>
 					<Link href="/driver/register" className="inline-block">
 						<Button className="bg-[#4A148C] hover:bg-[#6A1B9A] text-white px-6 lg:px-8 py-4 lg:py-6 text-base lg:text-lg w-full sm:w-auto">
-							Vamos conversar sobre sua operação
+							Casdastre-se Motoristas
 						</Button>
 					</Link>
 				</div>
