@@ -1,14 +1,11 @@
-
 FROM oven/bun:latest
 
 WORKDIR /app
 
-COPY ./app /app
-
-ENV PATH="/root/.bun/bin:$PATH"
-
-RUN bun install
-
 EXPOSE 3000
 
-CMD ["bun", "dev"]
+COPY ./app /app
+COPY ./start.sh /start.sh
+RUN chmod +x /start.sh
+
+RUN bun install
