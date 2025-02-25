@@ -10,8 +10,8 @@ services:
       - safedriver_network
     volumes:
       - ./app:/app
-    env_file:
-      - ./app/.env
+    environment:
+      - NEXT_PUBLIC_URL_API=http://localhost:8080
     command: /start.sh
 
 networks:
